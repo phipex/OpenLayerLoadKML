@@ -3,3 +3,5 @@
 
 #Ignora la carpeta vendedor
 js/vendor/*
+
+js/vendor/

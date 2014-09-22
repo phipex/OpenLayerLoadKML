@@ -403,4 +403,53 @@ describe("OpenLayers Load File",function(){
 
     });
 
+    describe("cuando deseo guardar la info del punto en la metadata de los features en el archivo sin campo nombre",function(){
+        var map = new OpenLayers.Map('map');
+
+        var vectors = new OpenLayers.Layer.Vector("Vector Layer");
+
+        var osm = new OpenLayers.Layer.OSM();
+
+        map.addLayers([osm,vectors]);
+
+        var featurePunto = format.read(wktPunto);
+        featurePunto.attributes = {'desc':'soy un punto muy feo y ademas estoy mal proyectado'};
+        var wktPoligono = "POLYGON((-77.34375 7.9921889305115, -80.859375 0.96093893051147, -73.828125 -2.5546860694885, -66.09375 -1.8515610694885, -64.6875 5.8828139305115, -73.125 11.507813930511, -80.859375 15.726563930511, -77.34375 7.9921889305115))";
+
+        var featurePoligono = format.read(wktPoligono);
+        featurePoligono.attributes = {'desc':'soy un poligono muy feo y ademas estoy mal proyectado'};
+        var wktLinea = "LINESTRING(1 1, 5 5, 10 10, 20 20)";
+
+        var featureLinea = format.read(wktLinea);
+        featureLinea.attributes = {'desc':'soy una linea muy feo y ademas estoy mal proyectado'};
+
+        vectors.addFeatures([featurePunto,featurePoligono,featureLinea]);
+
+        it("cuando deseo descargar un layer en kml", function () {
+
+            vectors.addFeatures([featurePunto,featurePoligono,featureLinea]);
+
+
+            var valorEsperado = true;
+
+            var valorEvaluado = true;
+
+            try{
+                vectors.addFeatures([featurePunto,featurePoligono,featureLinea]);
+                console.info(vectors);
+                valorEvaluado =OpenLayersLoadFile.downloadFile4Layer(vectors,'kml',"EPSG:900913");
+            }catch(e) {
+                valorEvaluado = false;
+                console.info(e);
+            }
+
+            expect(valorEvaluado).toBe(valorEsperado);
+
+        });
+
+
+
+
+    });
+
 });

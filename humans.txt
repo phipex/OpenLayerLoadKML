@@ -4,6 +4,7 @@
 # TEAM
 
     <name> -- <role> -- <twitter>
+    Andres Felipe Montoya -- DEV -- @phipex
 
 # THANKS
 
